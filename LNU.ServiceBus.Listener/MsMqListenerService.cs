@@ -18,7 +18,7 @@ namespace LNU.ServiceBus.Listener
         {
             _listener = new MsMqListener(_queueName, _endpoint);
 
-            await _listener.Listen().ConfigureAwait(false);
+            await _listener.Run().ConfigureAwait(false);
         }
 
         public void OnStop()

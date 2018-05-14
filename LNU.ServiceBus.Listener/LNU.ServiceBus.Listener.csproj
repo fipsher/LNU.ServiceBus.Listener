@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.8.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.8.1\lib\net45\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="NBUS6.Models">
       <HintPath>..\..\..\..\Downloads\NServiceBusDemo\NBUS6.Models\bin\Debug\NBUS6.Models.dll</HintPath>
     </Reference>
@@ -43,7 +46,11 @@
     <Reference Include="NServiceBus.Host, Version=7.0.0.0, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
       <HintPath>..\packages\NServiceBus.Host.7.0.2\lib\net452\NServiceBus.Host.exe</HintPath>
     </Reference>
+    <Reference Include="NServiceBus.ObjectBuilder.Autofac, Version=6.0.0.0, Culture=neutral, PublicKeyToken=9fc386479f8a226c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NServiceBus.Autofac.6.0.1\lib\net452\NServiceBus.ObjectBuilder.Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -53,12 +60,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\Bootstrapper.cs" />
     <Compile Include="Handlers\PlaceOrderHandler.cs" />
     <Compile Include="MsMqListenerService.cs" />
     <Compile Include="MsMqListener.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Email\EmailService.API\EmailService.API.csproj">
+      <Project>{9226bcbd-6227-4e60-a278-438af3927703}</Project>
+      <Name>EmailService.API</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Email\EmailService\EmailService.csproj">
+      <Project>{100e51d8-114a-4b51-aa37-2fc852fc833f}</Project>
+      <Name>EmailService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LNU.ServiceBus.App.Core\LNU.ServiceBus.App.Core.csproj">
       <Project>{06201D9B-A360-482C-98B8-A9E108526EE7}</Project>
       <Name>LNU.ServiceBus.App.Core</Name>
@@ -69,6 +85,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

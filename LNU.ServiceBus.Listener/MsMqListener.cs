@@ -1,4 +1,5 @@
-﻿using NServiceBus;
+﻿using Autofac;
+using NServiceBus;
 using NServiceBus.Features;
 using NServiceBus.Persistence.Legacy;
 using System;
@@ -19,9 +20,19 @@ namespace LNU.ServiceBus.Listener
             this._endpoint = endpoint;
         }
 
-        public async Task Listen()
+        public async Task Run()
         {
+            ContainerBuilder builder = new ContainerBuilder();
+            Bootstrapper.Bootstrap(builder);
+            IContainer container = builder.Build();
+
+
             var endpointConfiguration = new EndpointConfiguration(_endpoint);
+            endpointConfiguration.UseContainer<AutofacBuilder>(
+            customizations: customizations =>
+            {
+                customizations.ExistingLifetimeScope(container);
+            });
             endpointConfiguration.UseSerialization<JsonSerializer>();
             endpointConfiguration.EnableInstallers();
             endpointConfiguration.DisableFeature<TimeoutManager>();
